@@ -15,7 +15,8 @@
 
 ### ToDo
 
-* [ ] フレームワークの選定/雛形の作成
+* [x] フレームワークの選定/雛形の作成
+  * AngularJS/CoffeeScript/yeoman(+gulp)
 * [ ] S3へのビルドスクリプトを書く(gulpで)
 * [ ] First Deploy
 * [ ] 問題を解けるようにする(表示・選択)
@@ -36,3 +37,10 @@
 * リポジトリ作った
 * 目標決めた
 * ってまだこの日は始まったばかり(1:29)なので朝から何やるか考える
+
+### 2016/04/27
+
+* AngularJSとCoffeeScriptでやるって決めた
+* `yo angular --coffee`
+* `yo angular:service cbtExam --coffee`
+* はて、AngularJSってどう書くんだっけ?と忘れたはじめたのでチュートリアルもう一回やろ…
