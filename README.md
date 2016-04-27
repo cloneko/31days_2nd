@@ -52,7 +52,9 @@
   * ってgulpはExperimentalなのかよ…ってなわけでgruntにした
     * そもそもgulpは使ったことあったけどgrunt使ったことなかったんでgulpでいいや…って選択したのによく見たらExperimentalって書いてあるやん…
 
-    yo angular --coffee
-    yo angular:controller examlist --coffee
+```
+    $ yo angular --coffee
+    $ yo angular:controller examlist --coffee
+```
 
 剃り残したヒゲを抜こうとして毛抜きを手に取り、一生懸命抜こうとしてもひっからないなぁ…って凹んでたら持ってる向きが逆だったってくらい眠いのでとりあえず今日はここまでにしておく…
