@@ -27,6 +27,10 @@ angular
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
         controllerAs: 'about'
+      .when '/list',
+        templateUrl: 'views/examlist.html'
+        controller: 'ExamlistCtrl'
+        controllerAs: 'examlist'
       .otherwise
         redirectTo: '/'
 

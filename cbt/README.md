@@ -5,8 +5,8 @@ version 0.15.1.
 
 ## Build & development
 
-Run `gulp` for building and `gulp serve` for preview.
+Run `grunt` for building and `grunt serve` for preview.
 
 ## Testing
 
-Running `gulp test` will run the unit tests with karma.
+Running `grunt test` will run the unit tests with karma.
