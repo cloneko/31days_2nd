@@ -8,8 +8,8 @@
  # Controller of the cbtApp
 ###
 angular.module 'cbtApp'
-  .controller 'ExamlistCtrl', ->
-    @examlist = [
+  .controller 'ExamlistCtrl',($scope) ->
+    $scope.examlist = [
       'Network+'
       'SEA/J CSPM'
     ]
