@@ -31,6 +31,10 @@ angular
         templateUrl: 'views/examlist.html'
         controller: 'ExamlistCtrl'
         controllerAs: 'examlist'
+      .when '/exam',
+        templateUrl: 'views/exam.html'
+        controller: 'ExamCtrl'
+        controllerAs: 'exam'
       .otherwise
         redirectTo: '/'
 

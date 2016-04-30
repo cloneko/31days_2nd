@@ -1,0 +1,8 @@
+<div ng-controller="ExamCtrl">
+<p>This is the examlist view.</p>
+<div ng-repeat="q in exam">
+<h2>問: {{q.question}}</h2>
+<ol>
+<li ng-repeat="a in q.choice">{{a}}</li>
+</ol>
+</div>

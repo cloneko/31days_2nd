@@ -10,7 +10,7 @@
 angular.module 'cbtApp'
   .controller 'ExamlistCtrl',($scope) ->
     $scope.examlist = [
-      'Network+'
-      'SEA/J CSPM'
+      {name: 'Network+', json: 'networkplus'}
+      {name: 'SEA/J CSPM', json: 'cspm'}
     ]
     return
