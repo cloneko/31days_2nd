@@ -8,17 +8,9 @@
  # Controller of the cbtApp
 ###
 angular.module 'cbtApp'
-  .controller 'ExamCtrl',($scope) ->
-    $scope.exam = [
-        {
-            question: '1 + 1 = ?' 
-            choice: [
-                2
-                1
-                3
-                4
-            ]
-            answer: 1
-        }
-    ]
+  .controller 'ExamCtrl',['$scope', '$routeParams', '$http', ($scope, $routeParams, $http) ->
+    $scope.params = $routeParams.examName
+    $http.get("json/" + $routeParams.examName + ".json").success (data) ->
+      $scope.exam = data
     return
+  ]

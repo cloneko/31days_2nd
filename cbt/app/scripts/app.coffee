@@ -31,7 +31,7 @@ angular
         templateUrl: 'views/examlist.html'
         controller: 'ExamlistCtrl'
         controllerAs: 'examlist'
-      .when '/exam',
+      .when '/exam/:examName',
         templateUrl: 'views/exam.html'
         controller: 'ExamCtrl'
         controllerAs: 'exam'
