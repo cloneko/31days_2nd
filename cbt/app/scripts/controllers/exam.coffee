@@ -17,8 +17,10 @@ angular.module 'cbtApp'
       for q in data
         if q.answers is 1
           $scope.check[q.id] = q.choice[0]
+          q.view = "list"
         else
           $scope.check[q.id] = q.choice[0 .. q.answers - 1]
+          q.view = "multi"
         q.choice = shuffle(q.choice)
         questions.push(q)
       $scope.exam = shuffle(questions)
@@ -28,8 +30,22 @@ angular.module 'cbtApp'
         count = 0
         for id, answer of $scope.answer
           count++
-          if $scope.check[id] is answer
-            score++
+          if typeof $scope.check[id] is "number"
+            if $scope.check[id] is answer
+              score++
+          else
+            # 複数個の奴のチェック
+            # FIXME
+            $scope.check[id].sort()
+            rights = $scope.check[id].toString()
+            tmp = []
+            for id,multianswer of answer
+              tmp.push(multianswer)
+            tmp.sort()
+            console.log
+            if tmp.toString() is rights
+              console.log("Matched")
+              score++
         $scope.score = score / count * 100
    ]
 
@@ -44,3 +60,4 @@ shuffle = (array) ->
     array[m] = array[i]
     array[i] = t
     return array
+

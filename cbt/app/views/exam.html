@@ -2,11 +2,22 @@
 <p>This is the examlist({{params}}) view.</p>
 <div ng-repeat="q in exam">
 <h2>問: {{q.question}}</h2>
-<p>{{q.answers}}個選択</p>
-    <label ng-repeat="a in q.choice" style="display: block">
-        <input type="radio" ng-model="answer[q.id]" id="{{a}}" ng-value="a"> {{a}}
-    </label>
-    choice is {{answer[q.id]}}
+<p>{{q.answers}}個選択({{q.view}})</p>
+    <div ng-switch on="q.view">
+        <div ng-switch-when="list">
+            <label ng-repeat="a in q.choice" style="display: block">
+             <input type="radio" ng-model="answer[q.id]" id="{{a}}" ng-value="a"> {{a}}
+         </label>
+        </div>
+        <div ng-switch-when="multi">
+            <div ng-repeat="a in q.choice">
+            <label  style="display: block">
+             <input type="checkbox" ng-model="answer[q.id][$index]" ng-true-value="'{{a}}'"> {{a}}
+            </label>
+            </div>
+        </div>
+    </div>
+             choice is {{answer[q.id]}}
 </div>
 <button ng-click="checkExam()">点数を確認する</button>
 <div>{{score}}</div>
