@@ -16,12 +16,12 @@
 ### ToDo
 
 * [x] フレームワークの選定/雛形の作成
-  * AngularJS/CoffeeScript/yeoman(+gulp)
-* [ ] S3へのビルドスクリプトを書く(gulpで)
+  * AngularJS/CoffeeScript/yeoman(+ ~~gulp~~ gruntで)
+* [ ] S3へのビルドスクリプトを書く( ~~gulp~~ gruntで)
 * [ ] First Deploy
 * [ ] 問題を解けるようにする(表示・選択)
 * [ ] 複数の問題を表示する(1画面1問)
-* [ ] 採点
+* [x] 採点
 
 ### 次の段階(夢/妄想)
 
