@@ -19,7 +19,7 @@
   * AngularJS/CoffeeScript/yeoman(+ ~~gulp~~ gruntで)
 * [ ] S3へのビルドスクリプトを書く( ~~gulp~~ gruntで)
 * [ ] First Deploy
-* [ ] 問題を解けるようにする(表示・選択)
+* [x] 問題を解けるようにする(表示・選択)
 * [ ] 複数の問題を表示する(1画面1問)
 * [x] 採点
 
