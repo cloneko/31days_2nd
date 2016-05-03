@@ -10,7 +10,11 @@
 angular.module 'cbtApp'
   .controller 'ExamCtrl',['$scope', '$routeParams', '$http', ($scope, $routeParams, $http) ->
     $scope.params = $routeParams.examName
+    $scope.answer = {}
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       $scope.exam = data
-    return
+      for q in data
+        $scope.answer[q.id] = 0
+      console.log($scope.answer)
+        
   ]

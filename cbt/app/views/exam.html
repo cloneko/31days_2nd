@@ -3,6 +3,7 @@
 <div ng-repeat="q in exam">
 <h2>問{{q.id}}: {{q.question}}</h2>
     <label ng-repeat="a in q.choice" style="display: block">
-        <input type="radio"  ng-value="{{a}}">{{a}}
+        <input type="radio" ng-model="exam.answer[q.id]" ng-value="{{a}}">{{a}}
     </label>
+    choice is {{exam.answer[q.id]}}
 </div>
