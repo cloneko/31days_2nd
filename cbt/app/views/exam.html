@@ -1,15 +1,21 @@
 <div ng-controller="ExamCtrl">
 <p>This is the examlist({{params}}) view.</p>
 <div ng-repeat="q in exam">
-<h2>問: {{q.question}}</h2>
-<p>{{q.answers}}個選択({{q.view}})</p>
+<h2>問{{$index + 1}}: {{q.question}}</h2>
+
     <div ng-switch on="q.view">
-        <div ng-switch-when="list">
+        <div ng-switch-when="text">
+            <p>直接入力</p>
+             <input type="text" ng-model="answer[q.id]" id="{{a}}">
+        </div>
+        <div ng-switch-when="radio">
+            <p>{{q.answers}}個選択({{q.view}})</p>
             <label ng-repeat="a in q.choice" style="display: block">
              <input type="radio" ng-model="answer[q.id]" id="{{a}}" ng-value="a"> {{a}}
          </label>
         </div>
-        <div ng-switch-when="multi">
+        <div ng-switch-when="checkbox">
+            <p>{{q.answers}}個選択({{q.view}})</p>
             <div ng-repeat="a in q.choice">
             <label  style="display: block">
              <input type="checkbox" ng-model="answer[q.id][$index]" ng-true-value="'{{a}}'"> {{a}}

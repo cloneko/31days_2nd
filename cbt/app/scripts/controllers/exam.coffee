@@ -15,12 +15,16 @@ angular.module 'cbtApp'
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
       for q in data
-        if q.answers is 1
-          $scope.check[q.id] = q.choice[0]
-          q.view = "list"
-        else
-          $scope.check[q.id] = q.choice[0 .. q.answers - 1]
-          q.view = "multi"
+        switch q.answers
+          when 0
+            $scope.check[q.id] = q.choice
+            q.view = "text"
+          when 1
+            $scope.check[q.id] = q.choice[0]
+            q.view = "radio"
+          else
+            $scope.check[q.id] = q.choice[0 .. q.answers - 1]
+            q.view = "checkbox"
         q.choice = shuffle(q.choice)
         questions.push(q)
       $scope.exam = shuffle(questions)
@@ -30,12 +34,10 @@ angular.module 'cbtApp'
         count = 0
         for id, answer of $scope.answer
           count++
-          if typeof $scope.check[id] is "number"
-            if $scope.check[id] is answer
+          if typeof $scope.check[id] is "number" or typeof $scope.check[id] is "String"
+            if $scope.check[id].toString() is answer.toString()
               score++
           else
-            # 複数個の奴のチェック
-            # FIXME
             $scope.check[id].sort()
             rights = $scope.check[id].toString()
             tmp = []
@@ -44,7 +46,6 @@ angular.module 'cbtApp'
             tmp.sort()
             console.log
             if tmp.toString() is rights
-              console.log("Matched")
               score++
         $scope.score = score / count * 100
    ]
