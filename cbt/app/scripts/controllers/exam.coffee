@@ -12,6 +12,7 @@ angular.module 'cbtApp'
     $scope.params = $routeParams.examName
     $scope.answer = {}
     $scope.check = {}
+    $scope.count = 0
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
       for q in data
@@ -28,12 +29,17 @@ angular.module 'cbtApp'
         q.choice = shuffle(q.choice)
         questions.push(q)
       $scope.exam = shuffle(questions)
+      $scope.count = questions.length
+      # 全部表示しないでおく
+      for i in [1 .. $scope.count]
+        $scope["q" + i] = false
+      $scope.q0 = true
+      $scope.result = false
+      
       
       $scope.checkExam = ->
         score = 0
-        count = 0
         for id, answer of $scope.answer
-          count++
           if typeof $scope.check[id] is "number" or typeof $scope.check[id] is "String"
             if $scope.check[id].toString() is answer.toString()
               score++
@@ -44,10 +50,21 @@ angular.module 'cbtApp'
             for id,multianswer of answer
               tmp.push(multianswer)
             tmp.sort()
-            console.log
             if tmp.toString() is rights
               score++
-        $scope.score = score / count * 100
+        $scope.score =  score / $scope.count * 100
+        $scope.q100000 = false
+        $scope.result = true
+      
+      $scope.show = (number) ->
+        # 全部表示しないでおく
+        for i in [0 .. $scope.count]
+          $scope["q" + i] = false
+        $scope.q100000 = false
+        if number <= $scope.count
+          $scope["q" + number.toString()] = true
+        else
+          $scope.q100000 = true
    ]
 
 shuffle = (array) ->
