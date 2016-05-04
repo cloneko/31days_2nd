@@ -1,7 +1,8 @@
 <div ng-controller="ExamCtrl">
     <p>This is the examlist({{params}}) view.</p>
     <div ng-show="q0">
-        <p>この試験は{{params}}の試験です。全部で{{count}}問あります。</p>
+        <p>この試験は{{params}}の試験です。全部で{{max}}問あります。</p>
+        何問解きますか? <input type="text" ng-model="count" type="number" required min="1" max="{{max}}">
         <button ng-click="show(1)">試験を開始する</button>
     </div>
     <div ng-repeat="q in exam" ng-show="{{'q' + ($index + 1)}}">
@@ -34,7 +35,7 @@
     <div ng-show="q100000">
         <p>問題一覧です。問題をクリックするとその問題のフォームにジャンプします。試験終了でよろしければ「点数を確認する」ボタンを押して採点してください。
         <ol>
-            <li ng-repeat="q in exam"><a ng-click="show($index + 1)">{{q.question}}</a></li>
+            <li ng-repeat="q in exam" ng-if="$index < count"><a ng-click="show($index + 1)">{{q.question}}</a></li>
         </ol>
         <button ng-click="checkExam()" id="checkExam" onClick="disabled = true;">点数を確認する</button>
     </div>

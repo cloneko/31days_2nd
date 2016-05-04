@@ -13,6 +13,7 @@ angular.module 'cbtApp'
     $scope.answer = {}
     $scope.check = {}
     $scope.count = 0
+    $scope.max = 0
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
       for q in data
@@ -30,6 +31,7 @@ angular.module 'cbtApp'
         questions.push(q)
       $scope.exam = shuffle(questions)
       $scope.count = questions.length
+      $scope.max = questions.length
       # 全部表示しないでおく
       for i in [1 .. $scope.count]
         $scope["q" + i] = false
