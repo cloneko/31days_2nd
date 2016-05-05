@@ -1,4 +1,8 @@
-# cbt
+# Clobuta
+
+## About
+
+Clobuta is Cloneko's Computer Base Testing Simulator.
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
 version 0.15.1.
