@@ -12,23 +12,28 @@ angular.module 'cbtApp'
     $scope.params = $routeParams.examName
     $scope.answer = {}
     $scope.check = {}
+    $scope.wrong = {}
+    $scope.questionset = {}
     $scope.count = 0
     $scope.max = 0
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
       for q in data.questions
+        $scope.check[q.id] = {}
+        $scope.check[q.id]["q"] = q.q
         switch q.answers
           when 0
-            $scope.check[q.id] = q.a[0]
+            $scope.check[q.id]["a"] = q.a[0]
             q.view = "text"
           when 1
-            $scope.check[q.id] = q.a[0]
+            $scope.check[q.id]["a"] = q.a[0]
             q.view = "radio"
           else
-            $scope.check[q.id] = q.a[0 .. q.answers - 1]
+            $scope.check[q.id]["a"] = q.a[0 .. q.answers - 1]
             q.view = "checkbox"
         q.choice = shuffle(q.a)
         questions.push(q)
+      $scope.questionset = questions
       $scope.exam = shuffle(questions)
       $scope.count = questions.length
       $scope.max = questions.length
@@ -41,19 +46,26 @@ angular.module 'cbtApp'
       
       $scope.checkExam = ->
         score = 0
+        $scope.wrong = []
+        
         for id, answer of $scope.answer
-          if typeof $scope.check[id] is "number" or typeof $scope.check[id] is "String" or typeof $scope.check[id] is "string"
-            if $scope.check[id].toString() is answer.toString()
+          if typeof $scope.check[id]["a"] is "number" or typeof $scope.check[id]["a"] is "String" or typeof $scope.check[id]["a"] is "string"
+            if $scope.check[id]["a"].toString() is answer.toString()
               score++
+            else
+              $scope.wrong.push($scope.check[id]["q"])
           else
-            $scope.check[id].sort()
-            rights = $scope.check[id].toString()
+            $scope.check[id]["a"].sort()
+            rights = $scope.check[id]["a"].toString()
             tmp = []
+            
             for id,multianswer of answer
               tmp.push(multianswer)
             tmp.sort()
             if tmp.toString() is rights
               score++
+            else
+              $scope.wrong.push($scope.check[id]["q"])
         $scope.score =  score / $scope.count * 100
         $scope.q100000 = false
         $scope.result = true
@@ -70,7 +82,6 @@ angular.module 'cbtApp'
    ]
 
 shuffle = (array) ->
-  console.log("呼んだ?")
   m = array.length
   t = 0
   i = 0

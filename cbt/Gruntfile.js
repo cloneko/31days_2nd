@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+  grunt.loadNpmTasks("grunt-aws");
+
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -63,7 +65,20 @@ module.exports = function (grunt) {
           '.tmp/json/{,*/}*.json',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      }
+      } 
+      //aws: grunt.file.readJSON("aws-credentials.json"),
+      //s3: {
+      //  options: {
+      //    accessKeyId: "<%= aws.accessKeyId %>",
+      //    secretAccessKey: "<%= aws.secretAccessKey %>",
+      //    bucket: "<%= aws.bucket %>",
+      //    region: "<%= aws.region %>"
+      //  },
+      //  build: {
+      //    cwd: "build/",
+      //    src: "**"
+      //  }
+      //}
     },
 
     // The actual grunt server settings
@@ -429,9 +444,8 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.coffee',
         singleRun: true
       }
-    }
-  });
-
+    },
+});
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -483,6 +497,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build',
+    's3'
   ]);
 };
