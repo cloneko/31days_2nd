@@ -1,6 +1,8 @@
 <div ng-controller="ExamCtrl">
     <p>This is the examlist({{params}}) view.</p>
+    <p>{{message}}</p>
     <div ng-show="q0">
+        
         <p>この試験は{{params}}の試験です。全部で{{max}}問あります。</p>
         何問解きますか? <input type="text" ng-model="count" type="number" required min="1" max="{{max}}">
         <button ng-click="show(1)">試験を開始する</button>

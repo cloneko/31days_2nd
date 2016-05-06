@@ -16,7 +16,9 @@ angular.module 'cbtApp'
     $scope.questionset = {}
     $scope.count = 0
     $scope.max = 0
+    $scope.message = "Now Loading..."
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
+      
       questions = []
       for q in data.questions
         $scope.check[q.id] = {}
@@ -34,6 +36,7 @@ angular.module 'cbtApp'
         q.choice = shuffle(q.a)
         questions.push(q)
       $scope.questionset = questions
+      $scope.message = ""
       $scope.exam = shuffle(questions)
       $scope.count = questions.length
       $scope.max = questions.length
