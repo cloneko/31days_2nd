@@ -51,6 +51,10 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'postcss']
       },
+      json: {
+        files: ['<%= yeoman.app %>/json/{,*/}*.json'],
+        tasks: ['newer:copy:json' ]
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -65,20 +69,7 @@ module.exports = function (grunt) {
           '.tmp/json/{,*/}*.json',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      } 
-      //aws: grunt.file.readJSON("aws-credentials.json"),
-      //s3: {
-      //  options: {
-      //    accessKeyId: "<%= aws.accessKeyId %>",
-      //    secretAccessKey: "<%= aws.secretAccessKey %>",
-      //    bucket: "<%= aws.bucket %>",
-      //    region: "<%= aws.region %>"
-      //  },
-      //  build: {
-      //    cwd: "build/",
-      //    src: "**"
-      //  }
-      //}
+      }
     },
 
     // The actual grunt server settings
@@ -247,7 +238,7 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
           '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
+          '<%= yeoman.dist %>/styles/fonts/*',
         ]
       }
     },
@@ -398,6 +389,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
+            'json/{,*/}*json',
             'styles/fonts/{,*/}*.*'
           ]
         }, {
@@ -417,6 +409,12 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      json: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/json',
+        dest: '.tmp/json/',
+        src: '{,*/}*.json'
       }
     },
 
@@ -424,7 +422,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles'
+        'copy:styles',
+        'copy:json'
       ],
       test: [
         'coffee',
@@ -433,6 +432,7 @@ module.exports = function (grunt) {
       dist: [
         'coffee',
         'copy:styles',
+        'copy:json',
         'imagemin',
         'svgmin'
       ]
@@ -445,6 +445,19 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
+    aws: grunt.file.readJSON("credentials.json"),
+    s3: {
+      options: {
+        accessKeyId: "<%= aws.accessKeyId %>",
+        secretAccessKey: "<%= aws.secretAccessKey %>",
+        bucket: "<%= aws.bucket %>",
+        region: "<%= aws.region %>"
+      },
+      build: {
+        cwd: "dist/",
+        src: "**"
+      }
+    }
 });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -497,6 +510,11 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
+    'build',
+    's3'
+  ]);
+  grunt.registerTask('deploy', [
+    'newer:jshint',
     'build',
     's3'
   ]);

@@ -17,8 +17,8 @@
 
 * [x] フレームワークの選定/雛形の作成
   * AngularJS/CoffeeScript/yeoman(+ ~~gulp~~ gruntで)
-* [ ] S3へのビルドスクリプトを書く( ~~gulp~~ gruntで)
-* [ ] First Deploy
+* [x] S3へのビルドスクリプトを書く( ~~gulp~~ gruntで)
+* [x] First Deploy
 * [x] 問題を解けるようにする(表示・選択)
 * [x] 複数の問題を表示する(1画面1問)
 * [x] 採点

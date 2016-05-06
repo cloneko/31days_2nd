@@ -4,4 +4,4 @@
 /.sass-cache
 /bower_components
 /app/json/*.json
-aws-credentials.json
+credentials.json
