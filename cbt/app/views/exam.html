@@ -6,7 +6,7 @@
         <button ng-click="show(1)">試験を開始する</button>
     </div>
     <div ng-repeat="q in exam" ng-show="{{'q' + ($index + 1)}}">
-        <h2>問{{$index + 1}}: {{q.question}}</h2>
+        <h2>問{{$index + 1}}: {{q.q}}</h2>
         <div ng-switch on="q.view">
             <div ng-switch-when="text">
                 <p>直接入力</p>
@@ -35,7 +35,7 @@
     <div ng-show="q100000">
         <p>問題一覧です。問題をクリックするとその問題のフォームにジャンプします。試験終了でよろしければ「点数を確認する」ボタンを押して採点してください。
         <ol>
-            <li ng-repeat="q in exam" ng-if="$index < count"><a ng-click="show($index + 1)">{{q.question}}</a></li>
+            <li ng-repeat="q in exam" ng-if="$index < count"><a ng-click="show($index + 1)">{{q.q}}</a></li>
         </ol>
         <button ng-click="checkExam()" id="checkExam" onClick="disabled = true;">点数を確認する</button>
     </div>

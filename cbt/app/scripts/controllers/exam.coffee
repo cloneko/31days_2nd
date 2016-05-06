@@ -16,18 +16,19 @@ angular.module 'cbtApp'
     $scope.max = 0
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
-      for q in data
+      console.log(data.questions)
+      for q in data.questions
         switch q.answers
           when 0
-            $scope.check[q.id] = q.choice
+            $scope.check[q.id] = q.a[0]
             q.view = "text"
           when 1
-            $scope.check[q.id] = q.choice[0]
+            $scope.check[q.id] = q.a[0]
             q.view = "radio"
           else
-            $scope.check[q.id] = q.choice[0 .. q.answers - 1]
+            $scope.check[q.id] = q.a[0 .. q.answers - 1]
             q.view = "checkbox"
-        q.choice = shuffle(q.choice)
+        q.choice = shuffle(q.a)
         questions.push(q)
       $scope.exam = shuffle(questions)
       $scope.count = questions.length
@@ -42,10 +43,12 @@ angular.module 'cbtApp'
       $scope.checkExam = ->
         score = 0
         for id, answer of $scope.answer
-          if typeof $scope.check[id] is "number" or typeof $scope.check[id] is "String"
+          if typeof $scope.check[id] is "number" or typeof $scope.check[id] is "String" or typeof $scope.check[id] is "string"
             if $scope.check[id].toString() is answer.toString()
               score++
           else
+            console.log(typeof $scope.check[id])
+            console.log($scope.check[id])
             $scope.check[id].sort()
             rights = $scope.check[id].toString()
             tmp = []
