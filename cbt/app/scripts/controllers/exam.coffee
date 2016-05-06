@@ -16,7 +16,6 @@ angular.module 'cbtApp'
     $scope.max = 0
     $http.get("json/" + $routeParams.examName + ".json").success (data) ->
       questions = []
-      console.log(data.questions)
       for q in data.questions
         switch q.answers
           when 0
@@ -47,8 +46,6 @@ angular.module 'cbtApp'
             if $scope.check[id].toString() is answer.toString()
               score++
           else
-            console.log(typeof $scope.check[id])
-            console.log($scope.check[id])
             $scope.check[id].sort()
             rights = $scope.check[id].toString()
             tmp = []
@@ -73,6 +70,7 @@ angular.module 'cbtApp'
    ]
 
 shuffle = (array) ->
+  console.log("呼んだ?")
   m = array.length
   t = 0
   i = 0
@@ -82,5 +80,5 @@ shuffle = (array) ->
     t = array[m]
     array[m] = array[i]
     array[i] = t
-    return array
+  return array
 
