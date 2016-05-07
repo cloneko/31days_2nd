@@ -8,7 +8,7 @@
  # Controller of the cbtApp
 ###
 angular.module 'cbtApp'
-  .controller 'ExamCtrl',['$scope', '$routeParams', '$http', ($scope, $routeParams, $http) ->
+  .controller 'ExamCtrl',['$scope', '$routeParams', '$http', '$localStorage', ($scope, $routeParams, $http, $localStorage) ->
     $scope.params = $routeParams.examName
     $scope.answer = {}
     $scope.check = {}
@@ -17,8 +17,15 @@ angular.module 'cbtApp'
     $scope.count = 0
     $scope.max = 0
     $scope.message = "Now Loading..."
-    $http.get("json/" + $routeParams.examName + ".json").success (data) ->
-      
+    console.log($localStorage)
+    $scope.$storage = $localStorage.$default(
+      {
+        pass: "",
+        id: ""
+      }
+    )
+    url = "https://j5odg2vd05.execute-api.ap-northeast-1.amazonaws.com/prod/butaGetJSON?exam=#{$routeParams.examName}&pass=#{$scope.$storage.pass}"
+    $http.get(url).success (data) ->
       questions = []
       for q in data.questions
         $scope.check[q.id] = {}

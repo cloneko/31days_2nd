@@ -51,10 +51,6 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'postcss']
       },
-      json: {
-        files: ['<%= yeoman.app %>/json/{,*/}*.json'],
-        tasks: ['newer:copy:json' ]
-      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -66,7 +62,6 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '.tmp/scripts/{,*/}*.js',
-          '.tmp/json/{,*/}*.json',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -389,7 +384,6 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
-            'json/{,*/}*json',
             'styles/fonts/{,*/}*.*'
           ]
         }, {
@@ -409,12 +403,6 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
-      },
-      json: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/json',
-        dest: '.tmp/json/',
-        src: '{,*/}*.json'
       }
     },
 
@@ -422,8 +410,7 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles',
-        'copy:json'
+        'copy:styles'
       ],
       test: [
         'coffee',
@@ -432,7 +419,6 @@ module.exports = function (grunt) {
       dist: [
         'coffee',
         'copy:styles',
-        'copy:json',
         'imagemin',
         'svgmin'
       ]

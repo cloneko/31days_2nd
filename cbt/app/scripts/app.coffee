@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ngStorage'
   ]
   .config ($routeProvider) ->
     $routeProvider
@@ -35,6 +36,10 @@ angular
         templateUrl: 'views/exam.html'
         controller: 'ExamCtrl'
         controllerAs: 'exam'
+      .when '/config',
+        templateUrl: 'views/config.html'
+        controller: 'ConfigCtrl'
+        controllerAs: 'config'
       .otherwise
         redirectTo: '/'
 
