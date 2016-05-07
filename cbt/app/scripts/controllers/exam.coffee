@@ -25,10 +25,11 @@ angular.module 'cbtApp'
     )
     
     url = "https://j5odg2vd05.execute-api.ap-northeast-1.amazonaws.com/prod/butaGetJSON?exam=#{$routeParams.examName}&pass=#{$scope.$storage.pass}"
-    
-    $http({method: "GET", url: url}).then((data) ->
-      questions = []
-      for q in data.data.questions
+    questions = []
+    examQuestions = {}
+    $http({method: "GET", url: url,cache: true}).then((data) ->
+      examQuestions = data.data
+      for q in examQuestions.questions
         $scope.check[q.id] = {}
         $scope.check[q.id]["q"] = q.q
         switch q.answers
@@ -43,6 +44,7 @@ angular.module 'cbtApp'
             q.view = "checkbox"
         q.choice = shuffle(q.a)
         questions.push(q)
+
       $scope.questionset = questions
       $scope.message = ""
       $scope.exam = shuffle(questions)
@@ -55,7 +57,8 @@ angular.module 'cbtApp'
       $scope.result = false
     ,(err) ->
       console.log(err)
-    )  
+    )
+    
       
     $scope.checkExam = ->
       score = 0
