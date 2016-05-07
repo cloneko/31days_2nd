@@ -27,7 +27,6 @@ angular.module 'cbtApp'
     url = "https://j5odg2vd05.execute-api.ap-northeast-1.amazonaws.com/prod/butaGetJSON?exam=#{$routeParams.examName}&pass=#{$scope.$storage.pass}"
     
     $http({method: "GET", url: url}).then((data) ->
-      console.log data
       questions = []
       for q in data.data.questions
         $scope.check[q.id] = {}
