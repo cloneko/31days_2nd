@@ -17,17 +17,19 @@ angular.module 'cbtApp'
     $scope.count = 0
     $scope.max = 0
     $scope.message = "Now Loading..."
-    console.log($localStorage)
     $scope.$storage = $localStorage.$default(
       {
         pass: "",
         id: ""
       }
     )
+    
     url = "https://j5odg2vd05.execute-api.ap-northeast-1.amazonaws.com/prod/butaGetJSON?exam=#{$routeParams.examName}&pass=#{$scope.$storage.pass}"
-    $http.get(url).success (data) ->
+    
+    $http({method: "GET", url: url}).then((data) ->
+      console.log data
       questions = []
-      for q in data.questions
+      for q in data.data.questions
         $scope.check[q.id] = {}
         $scope.check[q.id]["q"] = q.q
         switch q.answers
@@ -52,44 +54,46 @@ angular.module 'cbtApp'
         $scope["q" + i] = false
       $scope.q0 = true
       $scope.result = false
+    ,(err) ->
+      console.log(err)
+    )  
       
-      
-      $scope.checkExam = ->
-        score = 0
-        $scope.wrong = []
-        
-        for id, answer of $scope.answer
-          if typeof $scope.check[id]["a"] is "number" or typeof $scope.check[id]["a"] is "String" or typeof $scope.check[id]["a"] is "string"
-            if $scope.check[id]["a"].toString() is answer.toString()
-              score++
-            else
-              $scope.wrong.push($scope.check[id]["q"])
+    $scope.checkExam = ->
+      score = 0
+      $scope.wrong = []
+  
+      for id, answer of $scope.answer
+        if typeof $scope.check[id]["a"] is "number" or typeof $scope.check[id]["a"] is "String" or typeof $scope.check[id]["a"] is "string"
+          if $scope.check[id]["a"].toString() is answer.toString()
+            score++
           else
-            $scope.check[id]["a"].sort()
-            rights = $scope.check[id]["a"].toString()
-            tmp = []
-            
-            for id,multianswer of answer
-              tmp.push(multianswer)
-            tmp.sort()
-            if tmp.toString() is rights
-              score++
-            else
-              $scope.wrong.push($scope.check[id]["q"])
+            $scope.wrong.push($scope.check[id]["q"])
+        else
+          $scope.check[id]["a"].sort()
+          rights = $scope.check[id]["a"].toString()
+          tmp = []
+         
+          for id,multianswer of answer
+            tmp.push(multianswer)
+          tmp.sort()
+          if tmp.toString() is rights
+            score++
+          else
+            $scope.wrong.push($scope.check[id]["q"])
         $scope.score =  score / $scope.count * 100
         $scope.q100000 = false
         $scope.result = true
       
-      $scope.show = (number) ->
-        # 全部表示しないでおく
-        for i in [0 .. $scope.count]
-          $scope["q" + i] = false
-        $scope.q100000 = false
-        if number <= $scope.count
-          $scope["q" + number.toString()] = true
-        else
-          $scope.q100000 = true
-   ]
+    $scope.show = (number) ->
+      # 全部表示しないでおく
+      for i in [0 .. $scope.count]
+        $scope["q" + i] = false
+      $scope.q100000 = false
+      if number <= $scope.count
+        $scope["q" + number.toString()] = true
+      else
+        $scope.q100000 = true
+  ]
 
 shuffle = (array) ->
   m = array.length

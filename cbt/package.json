@@ -40,5 +40,8 @@
   },
   "scripts": {
     "test": "karma start test/karma.conf.js"
+  },
+  "dependencies": {
+    "grunt-aws": "^0.6.2"
   }
 }
